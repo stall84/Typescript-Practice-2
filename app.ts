@@ -4,7 +4,7 @@ const button1: any = document.getElementById('button1');
 
 function clickAlert() {
 
-    const alertString: string = 'STOP!!!  ..  In tha naaammee of LET! (before I break ur code)';
+    const alertString: string = 'STOP!!!  ..  In tha naaammee of LET! (before U break MY CODE!!)';
     alert(alertString);
    
 }
