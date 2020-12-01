@@ -86,3 +86,81 @@ let fixedString: string = (<number>value).toFixed(4);       // wrapping in paren
 
 console.log(fixedString);   // 5.0000
 
+
+// ******** Control-Flow-based Type Analysis ********* //
+// Typescript compiler analyzes the conditional behavior in your code 
+// and applying type-checking to variables using the most narrow type possible
+
+// The normal behavior in getElementById function is to return an HTMLElement type (the DOM node you want)
+// If for say you want this displayDiv variable to also hold a string value along with HTMLElement type
+// Add a union-type declaration to the variable declaration and move it's initialization to anothe line
+
+function getDiv () {
+// Original:  
+// var displayDiv = document.getElementById('displayDiv');
+
+// Modified:
+var displayDiv: HTMLElement | string;
+// Use conditional to return the variable if it's type is string
+if (typeof displayDiv === 'string') {
+        return displayDiv;  // compiler uses this condition and at this point this variable can ONLY be a string
+    } 
+else {
+        return displayDiv;  // If flow hits else, the compiler makes the variable HTMLElement
+    }
+
+displayDiv = document.getElementById('displayDiv');     // Down here however displayDIv can be either string or HTMLElement (Widened)
+
+}
+
+
+// ******** FUNCTIONS ********* //
+
+// **** Type Annotations on Functions **** //
+
+
+// Old Javascript Function:
+// function dullFunc(value1, value2) {
+//     return 'Im a dumfunc that explicitly returns a string (type)';
+// }
+
+// Typescript Way of Annotating Functions: 
+function funFunc(score: number, message?: string): string {
+    // Above we have a parameter score typed as a number.
+    // The 2nd param message is OPTIONAL (?) and typed as string. 
+    // All optional params have to FOLLOW behind required params
+    // the : string annotation after the parameter closing parenthesis
+    // is the RETURN type of the function (string in this case)
+    return 'Ive got personality and am rather badass, also returning a string';
+}
+
+// NOTES: 
+// --noImplicitAny tsconfig.json option can be set to true if you don't want un-typed parameters to take
+//  on default type of 'any' (as in the dullFunc example params)
+
+// Default Initialized Parameters //
+
+function sendGreeting(greeting: string = 'Good Morning!'): void {
+    // Here we are defining the default greeting parameter as 'Good Morning!'
+    // If no value is passed in that argument, the default will be executed, 
+    // providing some grace  if param is forgotten/omitted 
+    // Otherwise the passed value arg will be executed.
+    // This function's return type is void. Because it doesn't return a value. (instead a console log)
+    console.log(greeting);
+}
+
+sendGreeting();                 // Log's  'Good Morning!'
+sendGreeting('Playsaywha??');   // Log's  'Playasaywha??'
+
+// **** Arrow Functions (Lambdas) **** //
+
+// General syntax:   parameters => function body
+// Everything on the left side of the arrow is a parameter. 
+// Everything on the right of the arrow is the function body. 
+// Step by Step :  1)  initialize a variable 'squareit' and assign it (let squareit)
+// to an arrow function (=).  2)  Define the parameter/input of the function (x). (=>)
+// 3) Define the function body by multiplying the input/param by itself (x * x;)
+
+let squareit = x => x * x;  // Return is implicit if there's only 1 expression on same line.
+                            // If body spans more than 1 experssion and/or line, wrap it in brackets
+                            
