@@ -163,4 +163,81 @@ sendGreeting('Playsaywha??');   // Log's  'Playasaywha??'
 
 let squareit = x => x * x;  // Return is implicit if there's only 1 expression on same line.
                             // If body spans more than 1 experssion and/or line, wrap it in brackets
-                            
+
+let adder = (a, b) => a + b;    // More than 1 parameter must be wrapped in parenthesis
+
+let greet2 = () => console.log('Sup');  // Of course you can have no params, wrapped in empty parenthesis
+
+let scores: number[] = [70, 125, 85, 110];
+let highScores: number[]; 
+
+highScores = scores.filter((element, index, array) => {
+    if (element > 100) {
+        return true; 
+    }
+})
+
+console.log(highScores);
+
+
+// Convert vanilla function to typescript arrow functin>>
+
+function logMessageOrig (message) {
+    console.log(message);
+}
+
+// 1)  Lambdas are anonymous, so remove the name (we will be in actuality just moving it to define 
+//     our constant here instead) and remove the function keyword as well 
+
+/*>>  const logMessage = (message) {
+    console.log(message);
+} */
+
+/* 2)  Type the message parameter as string. move the console log function body up to the same line
+        because there is only one return value in the body. remove brackets
+        assigning a VOID return type for this function, because of it's simplicity, is not necessary */
+        
+        const logMessageAdvanced = (message: string) => console.log(message);
+
+function logError(err: string): void {
+    console.error(err);
+}    
+
+
+/* INTERFACES IN TYPESCRIPT */
+// Interfaces contain properties that have empty implementations. It's up to the inheriting
+// Class to implement those interface properties, and all of them must be implemented
+
+interface Employee {
+
+    name: string;
+
+    title: string;
+}
+
+// One of the main functions of interfaces is the ability to inherit or be extended by other interfaces
+
+interface Manager extends Employee {
+
+    department: string;
+
+    numOfEmployees: number;
+
+    // Methods on interfaces only contain the function signature, and no implementation
+    scheduleMeeting: (topic: string) => void;
+    // It would be up to the class/object that implements this interface method to define the 
+    // implementation details of this method
+}
+
+// If we have an object literal like the following, it implements the Employee interface and can
+// be used anywhere the Employee object is implemented. As long as it has the base number 
+// of interface properties (it can have more than them).
+
+let developer = {
+    name: 'Michael',
+    title: 'Senior TS Developer',
+    editor: 'Visual Studio Code'
+}
+
+let newEmployee: Employee = developer;  // no compile problems. As long as the structures match.
+
