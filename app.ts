@@ -241,3 +241,58 @@ let developer = {
 
 let newEmployee: Employee = developer;  // no compile problems. As long as the structures match.
 
+
+/******** CLASSES (in depth) ********/
+// Class members are Public by default, but can be prefixed with private to make them private
+// The convention is to underscore private members/fields/props (_snoop: string;)
+
+class Developer {
+    department: string;
+    private _title: string;
+
+    // Accessor Methods (getters/setters)
+    get title(): string {       // the name of the function is the name of the property (title)
+        return this._title;
+    }
+    set title(newTitle: string) {
+        this._title = newTitle.toUpperCase();
+    }
+
+    // Methods .. 'function' keyword is not used as in normal function 
+    documentRequirements(requirements: string): void {
+        console.log(requirements);
+    }
+}
+
+// EXTENDING A CLASS //
+
+class WebDeveloper extends Developer {
+    favoriteEditor: string;
+
+    writeTypeScript(): void {
+        // some cool code
+    }
+}
+
+let webdev: WebDeveloper = new WebDeveloper();
+
+// Now you're able to set properties on the new webdev instance that were on the original Developer class (Inheritance)
+
+webdev.department = 'Software Engineering';
+webdev.favoriteEditor = 'VS Code';
+
+// It's visible that Interface inheritance (implementation) is very similar to Class inheritance (extension)
+
+interface Employee {
+    name: string;
+    title: string;
+    logID: () => string;
+}
+
+class Engineer implements Employee {
+    name: 'Michael';
+    title: 'Awesome Developer';
+    logID() {
+        return `${this.name} ${this.title}`;
+    }
+}
